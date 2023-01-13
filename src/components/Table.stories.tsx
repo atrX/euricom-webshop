@@ -60,3 +60,27 @@ export const Zebra = () => {
   const items = buildPeople();
   return <Table columns={columns} items={items} primaryKey="id" zebra />;
 };
+
+export const CustomBody = () => {
+  const columns = [
+    {
+      key: "id",
+      title: "ID",
+    },
+    {
+      key: "name",
+      title: "Name",
+    },
+  ] as Column<Item>[];
+  const items = buildPeople();
+  return (
+    <Table columns={columns} items={items} primaryKey="id">
+      {items.map((item) => (
+        <tr key={item.id}>
+          <td>{item.id}</td>
+          <td>{item.name}</td>
+        </tr>
+      ))}
+    </Table>
+  );
+};
