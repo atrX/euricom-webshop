@@ -71,3 +71,11 @@ enum Role {
     USER
     ADMIN
 }
+
+model Product {
+    id              String      @id @default(cuid()) @map("_id")
+    name            String
+    description     String
+    price           Float
+    image           String
+}
