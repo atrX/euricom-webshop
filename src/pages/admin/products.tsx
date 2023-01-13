@@ -29,4 +29,4 @@ export const AdminProductsPage: React.FC = () => {
   );
 };
 
-export default withAuth(AdminProductsPage);
+export default withAuth(AdminProductsPage, ["ADMIN"]);
