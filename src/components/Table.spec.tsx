@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { render, screen } from "@testing-library/react";
-import { describe, it } from "vitest";
+import { beforeEach, describe, it } from "vitest";
 import Table from "./Table";
 
 function getTableData() {
@@ -13,10 +13,12 @@ function getTableData() {
 }
 
 describe("Table component", () => {
+  let tableData: ReturnType<typeof getTableData>;
+
   function renderComponent() {
     render(
       <Table
-        items={getTableData()}
+        items={tableData}
         columns={[
           {
             key: "id",
@@ -32,6 +34,10 @@ describe("Table component", () => {
     );
   }
 
+  beforeEach(() => {
+    tableData = getTableData();
+  });
+
   it("should render", () => {
     renderComponent();
   });
@@ -44,8 +50,6 @@ describe("Table component", () => {
   });
 
   it("should show the correct data", () => {
-    const tableData = getTableData();
-
     renderComponent();
 
     tableData.forEach((item) => {
