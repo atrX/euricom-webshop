@@ -11,7 +11,12 @@
     "test": "vitest",
     "mongo:start": "sh startReplicaSetEnvironment.sh",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "db:up": "docker-compose up -d",
+    "db:down": "docker-compose down",
+    "db:seed": "prisma db seed",
+    "db:sync": "prisma db push",
+    "db:init": "docker-compose exec mongo mongo --eval \"rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'localhost:27017'}]});\""
   },
   "prisma": {
     "seed": "node scripts/seedDb.js"
