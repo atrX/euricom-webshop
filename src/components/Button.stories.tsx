@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import Button from "./Button";
 
@@ -6,20 +6,32 @@ export default {
   component: Button,
 } as Meta<typeof Button>;
 
-const Template: StoryFn<typeof Button> = (args) => (
-  <Button onClick={() => action("click")} {...args} />
-);
-
 export const Variants = () => (
   <div className="flex flex-wrap gap-1">
-    <Button variant="primary">Primary button</Button>
-    <Button variant="secondary">Secondary button</Button>
-    <Button variant="accent">Accent button</Button>
-    <Button variant="error">Error button</Button>
-    <Button variant="info">Info button</Button>
-    <Button variant="success">Success button</Button>
-    <Button variant="warning">Warning button</Button>
-    <Button variant="link">Link button</Button>
+    <Button variant="primary" onClick={() => action("click")}>
+      Primary button
+    </Button>
+    <Button variant="secondary" onClick={() => action("click")}>
+      Secondary button
+    </Button>
+    <Button variant="accent" onClick={() => action("click")}>
+      Accent button
+    </Button>
+    <Button variant="error" onClick={() => action("click")}>
+      Error button
+    </Button>
+    <Button variant="info" onClick={() => action("click")}>
+      Info button
+    </Button>
+    <Button variant="success" onClick={() => action("click")}>
+      Success button
+    </Button>
+    <Button variant="warning" onClick={() => action("click")}>
+      Warning button
+    </Button>
+    <Button variant="link" onClick={() => action("click")}>
+      Link button
+    </Button>
   </div>
 );
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 import { faker } from "@faker-js/faker";
 import Table from "./Table";
 import page from "./Table.mdx";
@@ -7,7 +7,7 @@ export default {
   component: Table,
   parameters: {
     docs: {
-       page,
+      page,
     },
   },
 } as Meta<typeof Table>;
@@ -31,33 +31,6 @@ function buildPeople(): Item[] {
     }));
 }
 
-const Template: StoryFn<
-  typeof Table<ReturnType<typeof buildPeople>[number]>
-> = (args) => <Table {...args} />;
-
-export const Regular = Template.bind({});
-Regular.args = {
-  columns: [
-    {
-      key: "id",
-      title: "ID",
-    },
-    {
-      key: "name",
-      title: "Name",
-    },
-  ],
-  items: buildPeople(),
-  primaryKey: "id",
-  zebra: false,
-};
-
-export const Zebra = Template.bind({});
-Zebra.args = {
-  ...Regular.args,
-  zebra: true,
-};
-
 export const Simple = () => {
   const columns = [
     {
@@ -68,7 +41,22 @@ export const Simple = () => {
       key: "name",
       title: "Name",
     },
-  ] as Column<Item>[]
+  ] as Column<Item>[];
   const items = buildPeople();
-  return <Table columns={columns} items={items} primaryKey="id"/>
-}
+  return <Table columns={columns} items={items} primaryKey="id" />;
+};
+
+export const Zebra = () => {
+  const columns = [
+    {
+      key: "id",
+      title: "ID",
+    },
+    {
+      key: "name",
+      title: "Name",
+    },
+  ] as Column<Item>[];
+  const items = buildPeople();
+  return <Table columns={columns} items={items} primaryKey="id" zebra />;
+};
