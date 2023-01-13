@@ -18,7 +18,13 @@ export const AdminProductsPage: React.FC = () => {
         ]}
         primaryKey="id"
         zebra
-      />
+      >
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+        </tr>
+      </Table>
     </div>
   );
 };
