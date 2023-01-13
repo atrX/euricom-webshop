@@ -1,0 +1,27 @@
+import { Story, Canvas, ArgsTable } from '@storybook/blocks';
+
+# Table
+
+## Properties
+
+<ArgsTable />
+
+## Default usage
+
+```ts
+type Item = {
+  id: number;
+  name: string;
+};
+
+type Column<T> = {
+  title: string;
+  key: keyof T;
+};
+```
+
+<Canvas>
+  <Story id="components-table--simple" />
+</Canvas>
+
+
