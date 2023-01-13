@@ -14,12 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid()) @map("_id")
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid()) @map("_id")
@@ -56,15 +50,6 @@ model User {
     role          Role    @default(USER)
     accounts      Account[]
     sessions      Session[]
-}
-
-model VerificationToken {
-    id         String    @id @default(cuid()) @map("_id")
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
 }
 
 enum Role {
