@@ -83,6 +83,7 @@ describe("Button component", () => {
       "primary",
       "secondary",
       "accent",
+      // "neutral",
       "error",
       "info",
       "link",

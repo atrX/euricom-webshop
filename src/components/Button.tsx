@@ -13,6 +13,7 @@ const VARIANTS = {
   error: "btn-error",
   info: "btn-info",
   link: "btn-link",
+  neutral: "",
   primary: "btn-primary",
   secondary: "btn-secondary",
   success: "btn-success",

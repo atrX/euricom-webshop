@@ -6,6 +6,7 @@ export type TableProps<T> = {
   columns: Array<{
     title: string;
     key: keyof T;
+    sticky?: boolean;
   }>;
   items: Array<T>;
   primaryKey: keyof T;
@@ -23,8 +24,10 @@ const Table = <T extends object>({
     <>
       {items.map((item) => (
         <tr key={item[primaryKey] as string}>
-          {columns.map(({ key, title }) => (
-            <td key={title}>{item[key] as string}</td>
+          {columns.map(({ key, title, sticky }) => (
+            <td key={title} className={classNames(sticky && "sticky right-0")}>
+              {item[key] as string}
+            </td>
           ))}
         </tr>
       ))}
@@ -32,12 +35,17 @@ const Table = <T extends object>({
   );
 
   return (
-    <div className="overflow-x-auto">
+    <div className="w-full overflow-x-auto">
       <table className={classNames("table", "w-full", zebra && "table-zebra")}>
         <thead>
           <tr>
-            {columns.map(({ title }) => (
-              <th key={title}>{title}</th>
+            {columns.map(({ title, sticky }) => (
+              <th
+                key={title}
+                className={classNames(sticky && "sticky right-0")}
+              >
+                {title}
+              </th>
             ))}
           </tr>
         </thead>

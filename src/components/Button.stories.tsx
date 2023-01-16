@@ -17,6 +17,9 @@ export const Variants = () => (
     <Button variant="accent" onClick={() => action("click")}>
       Accent button
     </Button>
+    <Button variant="neutral" onClick={() => action("click")}>
+      Neutral button
+    </Button>
     <Button variant="error" onClick={() => action("click")}>
       Error button
     </Button>
@@ -63,6 +66,9 @@ export const Outline = () => (
     </Button>
     <Button variant="accent" outline>
       Accent outline button
+    </Button>
+    <Button variant="neutral" outline>
+      Neutral outline button
     </Button>
     <Button variant="error" outline>
       Error outline button

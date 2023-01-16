@@ -1,14 +1,34 @@
+import { useEffect } from "react";
+import Pagination from "../../components/Pagination";
 import Table from "../../components/Table";
 import { api } from "../../utils/api";
+import { usePagination } from "../../utils/use-pagination";
 import { withAuth } from "../../utils/with-auth";
 
 export const AdminProductsPage: React.FC = () => {
   const { data: products } = api.products.getAll.useQuery();
+  const { pagination, setPagination } = usePagination();
+  const { data } = api.products.getPaged.useQuery(pagination);
+  const { items: products, pagination: paginationResult } = data ?? {};
 
-  if (!products) return <div>Loading...</div>;
+  useEffect(() => {
+    setPagination((previousPagination) => ({
+      ...previousPagination,
+      ...paginationResult,
+    }));
+  }, [paginationResult, setPagination]);
+
+  if (!products || !pagination) return <div>Loading...</div>;
+
+  function goToPageHandler(page: number) {
+    setPagination((previousPagination) => ({
+      ...previousPagination,
+      page,
+    }));
+  }
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-4">
       <Table
         items={products}
         columns={[
@@ -32,6 +52,11 @@ export const AdminProductsPage: React.FC = () => {
           </tr>
         ))}
       </Table>
+      <Pagination
+        page={pagination.page}
+        totalPages={pagination.totalPages}
+        onGoToPage={goToPageHandler}
+      />
     </div>
   );
 };
