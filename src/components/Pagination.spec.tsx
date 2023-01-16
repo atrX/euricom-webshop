@@ -1,13 +1,28 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { useState } from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import Pagination from "./Pagination";
 
+type PaginationComponentProps = {
+  initialPage?: number;
+  onGoToPage?: (page: number) => void;
+};
+
 describe("Pagination component", () => {
-  function renderComponent(initialPage = 1) {
+  function renderComponent({
+    initialPage = 1,
+    onGoToPage,
+  }: PaginationComponentProps = {}) {
     const PaginationComponent: React.FC = () => {
       const [page, setPage] = useState(initialPage);
-      return <Pagination page={page} totalPages={10} onGoToPage={setPage} />;
+      return (
+        <Pagination
+          page={page}
+          totalPages={10}
+          onGoToPage={onGoToPage ?? setPage}
+        />
+      );
     };
 
     render(<PaginationComponent />);
@@ -27,13 +42,23 @@ describe("Pagination component", () => {
     [10, [8, 9, 10]],
   ])(
     "should display the correct pages for page %i: %j",
-    (page, visiblePages) => {
-      renderComponent(page);
+    (initialPage, visiblePages) => {
+      renderComponent({ initialPage });
 
       visiblePages.forEach((visiblePage) => {
         screen.getByText(visiblePage);
       });
-      expect(false).toBeTruthy();
     }
   );
+
+  it("should go to the correct page when clicked", async () => {
+    const goToPageMock = vi.fn();
+
+    renderComponent({ onGoToPage: goToPageMock });
+
+    const pageButton = screen.getByRole("button", { name: "3" });
+    await userEvent.click(pageButton);
+
+    expect(goToPageMock).toHaveBeenCalledWith(3);
+  });
 });
