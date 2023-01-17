@@ -1,29 +1,22 @@
-import { useEffect } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Button from "../../components/Button";
 import Pagination from "../../components/Pagination";
 import Table from "../../components/Table";
-import { api } from "../../utils/api";
+import { useProducts } from "../../utils/queries/use-products";
 import { useDialog } from "../../utils/use-dialog";
-import { usePagination } from "../../utils/use-pagination";
 import { withAuth } from "../../utils/with-auth";
 
 export const AdminProductsPage: React.FC = () => {
   const { showConfirmation } = useDialog();
-  const { pagination, setPagination } = usePagination();
+  const {
+    data: products,
+    isLoading,
+    pagination,
+    setPagination,
+    remove,
+  } = useProducts();
 
-  const { data } = api.products.getPaged.useQuery(pagination);
-  const { mutateAsync: remove } = api.products.remove.useMutation();
-  const { items: products, pagination: paginationResult } = data ?? {};
-
-  useEffect(() => {
-    setPagination((previousPagination) => ({
-      ...previousPagination,
-      ...paginationResult,
-    }));
-  }, [paginationResult, setPagination]);
-
-  if (!products || !pagination) return <div>Loading...</div>;
+  if (isLoading || !products) return <div>Loading...</div>;
 
   function goToPageHandler(page: number) {
     setPagination((previousPagination) => ({
@@ -37,7 +30,7 @@ export const AdminProductsPage: React.FC = () => {
       "Are you sure you want to remove this product?"
     );
     if (result) {
-      void remove(id);
+      remove(id);
     }
   }
 
@@ -60,7 +53,11 @@ export const AdminProductsPage: React.FC = () => {
             <td>{product.name}</td>
             <td>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={product.image} alt={product.name} />
+              <img
+                src={product.image}
+                alt={product.name}
+                className="max-h-12"
+              />
             </td>
             <td>&euro;{product.price.toFixed(2)}</td>
             <td>{product.description}</td>
