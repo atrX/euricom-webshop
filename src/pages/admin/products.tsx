@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Button from "../../components/Button";
 import Pagination from "../../components/Pagination";
@@ -7,6 +8,7 @@ import { useDialog } from "../../utils/use-dialog";
 import { withAuth } from "../../utils/with-auth";
 
 export const AdminProductsPage: React.FC = () => {
+  const router = useRouter();
   const { showConfirmation } = useDialog();
   const {
     data: products,
@@ -34,8 +36,15 @@ export const AdminProductsPage: React.FC = () => {
     }
   }
 
+  function addProduct() {
+    void router.push("/admin/add-product");
+  }
+
   return (
     <div className="flex flex-col items-center gap-4">
+      <div className="flex w-full flex-row justify-end">
+        <Button onClick={addProduct}>Add product</Button>
+      </div>
       <Table
         items={products}
         columns={[

@@ -1,7 +1,8 @@
 import { z } from "zod";
 import type { Product } from "@prisma/client";
 import type { PagedResult } from "../../../types/pagination";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure, adminProcedure } from "../trpc";
+import { productSchema } from "../../../schemas/product.schema";
 
 export const productsRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
@@ -57,7 +58,7 @@ export const productsRouter = createTRPCRouter({
       } as PagedResult<Product>;
     }),
 
-  remove: publicProcedure
+  remove: adminProcedure
     .input(z.string())
     .mutation(async ({ ctx, input: id }) => {
       return ctx.prisma.product.delete({
@@ -66,4 +67,10 @@ export const productsRouter = createTRPCRouter({
         },
       });
     }),
+
+  add: adminProcedure.input(productSchema).mutation(async ({ ctx, input }) => {
+    return ctx.prisma.product.create({
+      data: input,
+    });
+  }),
 });
