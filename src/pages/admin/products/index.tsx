@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import { MdDelete, MdEdit } from "react-icons/md";
-import Button from "../../components/Button";
-import Pagination from "../../components/Pagination";
-import Table from "../../components/Table";
-import { useProducts } from "../../utils/queries/use-products";
-import { useDialog } from "../../utils/use-dialog";
-import { withAuth } from "../../utils/with-auth";
+import Button from "../../../components/Button";
+import Pagination from "../../../components/Pagination";
+import Table from "../../../components/Table";
+import { useProducts } from "../../../utils/queries/use-products";
+import { useDialog } from "../../../utils/use-dialog";
+import { withAuth } from "../../../utils/with-auth";
 
 export const AdminProductsPage: React.FC = () => {
   const router = useRouter();
@@ -37,7 +37,11 @@ export const AdminProductsPage: React.FC = () => {
   }
 
   function addProduct() {
-    void router.push("/admin/add-product");
+    void router.push("/admin/products/add");
+  }
+
+  function editProduct(id: string) {
+    void router.push(`/admin/products/${id}`);
   }
 
   return (
@@ -72,6 +76,13 @@ export const AdminProductsPage: React.FC = () => {
             <td>{product.description}</td>
             <td className="sticky right-0">
               <div className="flex flex-row gap-1">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => void editProduct(product.id)}
+                >
+                  <MdEdit />
+                </Button>
                 <Button
                   variant="error"
                   size="sm"
