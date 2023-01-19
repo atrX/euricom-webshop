@@ -28,6 +28,7 @@ export type ButtonProps = {
   onClick?: () => void;
   outline?: boolean;
   size?: keyof typeof SIZES;
+  type?: "button" | "reset" | "submit";
   variant?: keyof typeof VARIANTS;
 };
 
@@ -39,6 +40,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   outline,
   size = "md",
+  type = "button",
   variant = "primary",
 }) => {
   return (
@@ -53,7 +55,7 @@ const Button: React.FC<ButtonProps> = ({
       )}
       disabled={disabled}
       onClick={onClick}
-      type="button"
+      type={type}
     >
       {children}
     </button>

@@ -1,13 +1,10 @@
 import { z } from "zod";
 import type { Product } from "@prisma/client";
 import type { PagedResult } from "../../../types/pagination";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure, adminProcedure } from "../trpc";
+import { productSchema } from "../../../schemas/product.schema";
 
 export const productsRouter = createTRPCRouter({
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.product.findMany();
-  }),
-
   getPaged: publicProcedure
     .input(
       z
@@ -57,7 +54,15 @@ export const productsRouter = createTRPCRouter({
       } as PagedResult<Product>;
     }),
 
-  remove: publicProcedure
+  get: publicProcedure.input(z.string()).query(async ({ ctx, input: id }) => {
+    return ctx.prisma.product.findFirst({
+      where: {
+        id,
+      },
+    });
+  }),
+
+  remove: adminProcedure
     .input(z.string())
     .mutation(async ({ ctx, input: id }) => {
       return ctx.prisma.product.delete({
@@ -66,4 +71,20 @@ export const productsRouter = createTRPCRouter({
         },
       });
     }),
+
+  add: adminProcedure.input(productSchema).mutation(async ({ ctx, input }) => {
+    return ctx.prisma.product.create({
+      data: input,
+    });
+  }),
+
+  edit: adminProcedure.input(productSchema).mutation(async ({ ctx, input }) => {
+    const { id, ...data } = input;
+    return ctx.prisma.product.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  }),
 });

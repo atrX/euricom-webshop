@@ -9,7 +9,8 @@ export function useProducts() {
   const trpcUtils = api.useContext();
   const queryProps = api.products.getPaged.useQuery(pagination);
   const { mutate: remove } = api.products.remove.useMutation({
-    onSuccess() {
+    onSuccess(data) {
+      void trpcUtils.products.get.invalidate(data.id);
       void trpcUtils.products.getPaged.invalidate();
     },
   });
