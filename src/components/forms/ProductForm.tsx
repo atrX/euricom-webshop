@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Product } from "@prisma/client";
@@ -9,6 +10,16 @@ import Textarea from "../Textarea";
 import FileInput from "../FileInput";
 import Button from "../Button";
 import { api } from "../../utils/api";
+import { uploadFile } from "../../utils/file-service";
+
+const productFormSchema = productSchema.merge(
+  z.object({
+    image: z.custom(
+      (data) => typeof window !== "undefined" && data instanceof File,
+      "Image is required"
+    ),
+  })
+);
 
 export type ProductFormProps = {
   onSubmit?: (data: Product) => void;
@@ -20,7 +31,7 @@ type FormValues = {
   name: string;
   description: string;
   price: number | null;
-  image: string | null;
+  image: string | File | null;
 };
 
 const ProductForm: React.FC<ProductFormProps> = ({
@@ -40,7 +51,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
     },
   });
 
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit, formState } = useForm<FormValues>({
     defaultValues: {
       id: product?.id,
       name: product?.name ?? "",
@@ -48,12 +59,22 @@ const ProductForm: React.FC<ProductFormProps> = ({
       price: product?.price ?? null,
       image: product?.image ?? null,
     },
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(productFormSchema),
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    let { image } = data;
+    if (image && typeof image !== "string") {
+      image = await uploadFile(image);
+    }
+
+    const body = {
+      ...data,
+      image,
+    } as Product;
+
     const mutate = product ? editProduct : addProduct;
-    const result = await mutate(data as Product);
+    const result = await mutate(body);
     submitHandler?.(result);
   });
 
@@ -88,12 +109,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
             label="Image"
             name={name}
             error={error}
-            onChangeData={(files) => onChange(files?.[0] ?? null)}
+            onChange={(files) => onChange(files?.[0] ?? null)}
           />
         )}
       />
 
-      <Button type="submit">{product ? "Edit product" : "Add product"}</Button>
+      <Button
+        type="submit"
+        disabled={formState.isSubmitting}
+        loading={formState.isSubmitting}
+      >
+        {product ? "Edit product" : "Add product"}
+      </Button>
     </Form>
   );
 };

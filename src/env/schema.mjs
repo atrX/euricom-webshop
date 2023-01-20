@@ -6,6 +6,10 @@ import { z } from "zod";
  * This way you can ensure the app isn't built with invalid env vars.
  */
 export const serverSchema = z.object({
+  APP_URL: z.preprocess(
+    (str) => process.env.VERCEL_URL ?? str,
+    process.env.VERCEL ? z.string() : z.string().url()
+  ),
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   NEXTAUTH_SECRET:

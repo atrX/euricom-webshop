@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { useSession, type SessionContextValue } from "next-auth/react";
 import { useRouter, type NextRouter } from "next/router";
 import {

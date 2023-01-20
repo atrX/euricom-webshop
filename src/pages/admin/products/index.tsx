@@ -1,3 +1,4 @@
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Button from "../../../components/Button";
@@ -7,7 +8,7 @@ import { useProducts } from "../../../utils/queries/use-products";
 import { useDialog } from "../../../utils/use-dialog";
 import { withAuth } from "../../../utils/with-auth";
 
-export const AdminProductsPage: React.FC = () => {
+export const AdminProductsPage: NextPage = () => {
   const router = useRouter();
   const { showConfirmation } = useDialog();
   const {

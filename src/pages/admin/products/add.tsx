@@ -1,9 +1,10 @@
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Button from "../../../components/Button";
 import { withAuth } from "../../../utils/with-auth";
 import ProductForm from "../../../components/forms/ProductForm";
 
-export const AdminAddProductPage: React.FC = () => {
+export const AdminAddProductPage: NextPage = () => {
   const router = useRouter();
 
   function goToProductsOverview() {

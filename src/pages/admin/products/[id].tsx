@@ -1,10 +1,11 @@
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Button from "../../../components/Button";
 import { withAuth } from "../../../utils/with-auth";
 import ProductForm from "../../../components/forms/ProductForm";
 import { api } from "../../../utils/api";
 
-export const AdminEditProductPage: React.FC = () => {
+export const AdminEditProductPage: NextPage = () => {
   const router = useRouter();
 
   const productId = router.query.id as string;
