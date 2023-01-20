@@ -52,7 +52,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     const mutate = product ? editProduct : addProduct;
     const result = await mutate(data as Product);
     submitHandler?.(result);

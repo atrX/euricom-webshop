@@ -11,6 +11,7 @@ const SIZES = {
 const VARIANTS = {
   accent: "btn-accent",
   error: "btn-error",
+  ghost: "btn-ghost",
   info: "btn-info",
   link: "btn-link",
   neutral: "",
