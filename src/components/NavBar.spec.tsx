@@ -61,8 +61,8 @@ describe("NavBar component", () => {
   it("should show the active route", () => {
     render(<NavBar />);
 
-    const home = screen.getByRole("link", { name: /home/i });
-    expect(home).toHaveClass("active");
+    const products = screen.getByRole("link", { name: /products/i });
+    expect(products).toHaveClass("active");
   });
 
   describe("when a user is not signed in", () => {
@@ -70,7 +70,7 @@ describe("NavBar component", () => {
       render(<NavBar />);
 
       // should contain
-      screen.getByRole("link", { name: /home/i });
+      screen.getByRole("link", { name: /products/i });
       screen.getByRole("button", { name: /sign in/i });
 
       // should not contain
@@ -90,7 +90,7 @@ describe("NavBar component", () => {
       render(<NavBar />);
 
       // should contain
-      screen.getByRole("link", { name: /home/i });
+      screen.getByRole("link", { name: /products/i });
       screen.getByRole("button", { name: /sign out/i });
 
       // should not contain
@@ -110,7 +110,7 @@ describe("NavBar component", () => {
       render(<NavBar />);
 
       // should contain
-      screen.getByRole("link", { name: /home/i });
+      screen.getByRole("link", { name: /products/i });
       screen.getByRole("link", { name: /admin/i });
       screen.getByRole("button", { name: /sign out/i });
 

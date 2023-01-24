@@ -23,6 +23,7 @@ specifiers:
   '@trpc/next': ^10.8.1
   '@trpc/react-query': ^10.8.1
   '@trpc/server': ^10.8.1
+  '@types/lodash': ^4.14.191
   '@types/mime-types': ^2.1.1
   '@types/multer': ^1.4.7
   '@types/node': ^18.11.18
@@ -42,6 +43,7 @@ specifiers:
   eslint-config-next: 13.1.1
   eslint-plugin-storybook: ^0.6.10
   jsdom: ^21.0.0
+  lodash: ^4.17.21
   mime-types: ^2.1.35
   multer: 1.4.5-lts.1
   next: 13.1.1
@@ -76,6 +78,7 @@ dependencies:
   '@trpc/react-query': 10.9.0_qw4miir7nnxijwjta54q3esyeq
   '@trpc/server': 10.9.0
   classnames: 2.3.2
+  lodash: 4.17.21
   mime-types: 2.1.35
   multer: 1.4.5-lts.1
   next: 13.1.1_biqbaboplfbrettd7655fr4n2y
@@ -105,6 +108,7 @@ devDependencies:
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 14.4.3
+  '@types/lodash': 4.14.191
   '@types/mime-types': 2.1.1
   '@types/multer': 1.4.7
   '@types/node': 18.11.18
@@ -2265,7 +2269,7 @@ packages:
       '@storybook/csf-plugin': 7.0.0-beta.25
       '@storybook/csf-tools': 7.0.0-beta.25
       '@storybook/global': 5.0.0
-      '@storybook/mdx2-csf': 1.0.0-next.4
+      '@storybook/mdx2-csf': 1.0.0-next.5
       '@storybook/node-logger': 7.0.0-beta.25
       '@storybook/postinstall': 7.0.0-beta.25
       '@storybook/preview-api': 7.0.0-beta.25
@@ -3093,8 +3097,8 @@ packages:
     resolution: {integrity: sha512-WFUuqeGHqReeustZSOP4N5eMEBJ8bf2/c49v/my3IGroUFIGjV2EKX9jyOtJek3xP9LhctWTydezZ9H6EVpXVQ==}
     dev: true
 
-  /@storybook/mdx2-csf/1.0.0-next.4:
-    resolution: {integrity: sha512-nvRgYdpYvXsvSgCzKc4LQA1JxtJzmv47IsFAsh1rTz5FoHyK8watLU2WqX9T4w52fpFXBHx7RwGEsCRt0XgZlQ==}
+  /@storybook/mdx2-csf/1.0.0-next.5:
+    resolution: {integrity: sha512-02w0sgGZaK1agT050yCVhJ+o4rLHANWvLKWjQjeAsYbjneLC5ITt+3GDB4jRiWwJboZ8dHW1fGSK1Vg5fA34aQ==}
     dev: true
 
   /@storybook/nextjs/7.0.0-beta.25_c7wt3y5o4girl3ug7gehbiu6be:
@@ -8015,7 +8019,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
