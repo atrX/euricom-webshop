@@ -15,7 +15,9 @@ import { uploadFile } from "../../utils/file-service";
 const productFormSchema = productSchema.merge(
   z.object({
     image: z.custom(
-      (data) => typeof window !== "undefined" && data instanceof File,
+      (data) =>
+        typeof window !== "undefined" &&
+        (typeof data === "string" || data instanceof File),
       "Image is required"
     ),
   })
@@ -31,6 +33,7 @@ type FormValues = {
   name: string;
   description: string;
   price: number | null;
+  stock: number | null;
   image: string | File | null;
 };
 
@@ -57,6 +60,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
       name: product?.name ?? "",
       description: product?.description ?? "",
       price: product?.price ?? null,
+      stock: product?.stock ?? null,
       image: product?.image ?? null,
     },
     resolver: zodResolver(productFormSchema),
@@ -92,6 +96,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
         control={control}
         render={({ field, fieldState: { error } }) => (
           <NumericInput label="Price" {...field} error={error} />
+        )}
+      />
+      <Controller
+        name="stock"
+        control={control}
+        render={({ field, fieldState: { error } }) => (
+          <NumericInput label="Stock" {...field} error={error} />
         )}
       />
       <Controller
