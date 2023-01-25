@@ -56,6 +56,7 @@ export const AdminProductsPage: NextPage = () => {
           { key: "name", title: "Name" },
           { key: "image", title: "Image" },
           { key: "price", title: "Price" },
+          { key: "stock", title: "Stock" },
           { key: "description", title: "Description" },
           { key: "id", title: "Actions", sticky: true },
         ]}
@@ -74,6 +75,7 @@ export const AdminProductsPage: NextPage = () => {
               />
             </td>
             <td>&euro;{product.price.toFixed(2)}</td>
+            <td>{product.stock}</td>
             <td>{product.description}</td>
             <td className="sticky right-0">
               <div className="flex flex-row gap-1">
