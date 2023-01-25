@@ -19,10 +19,10 @@ specifiers:
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
   '@testing-library/user-event': ^14.4.3
-  '@trpc/client': ^10.8.1
-  '@trpc/next': ^10.8.1
-  '@trpc/react-query': ^10.8.1
-  '@trpc/server': ^10.8.1
+  '@trpc/client': ^10.9.0
+  '@trpc/next': ^10.9.0
+  '@trpc/react-query': ^10.9.0
+  '@trpc/server': ^10.9.0
   '@types/lodash': ^4.14.191
   '@types/mime-types': ^2.1.1
   '@types/multer': ^1.4.7

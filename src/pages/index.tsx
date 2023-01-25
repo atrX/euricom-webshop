@@ -1,14 +1,38 @@
+import type { Product } from "@prisma/client";
+import type {
+  UseInfiniteQueryOptions,
+  UseInfiniteQueryResult,
+} from "@tanstack/react-query";
 import { type NextPage } from "next";
 import Card from "../components/Card";
 import Grid from "../components/Grid";
+import ScrollLoader from "../components/ScrollLoader";
+import type { PagedResult } from "../types/pagination";
+import { api } from "../utils/api";
 import { useCart } from "../utils/queries/use-cart";
-import { useProducts } from "../utils/queries/use-products";
 
 const Products: NextPage = () => {
-  const { data: products, isLoading } = useProducts();
+  // TODO: for some reason the typing is messed up, investigate
+  const { data, isLoading, isFetching, hasNextPage, fetchNextPage } =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+    (api.products.getPaged as any).useInfiniteQuery(undefined, {
+      getNextPageParam: (lastPage) => {
+        const { page, totalPages } = lastPage.pagination;
+        return page < totalPages ? page + 1 : undefined;
+      },
+    } as UseInfiniteQueryOptions<PagedResult<Product>>) as UseInfiniteQueryResult<
+      PagedResult<Product>
+    >;
   const { addToCart } = useCart();
 
+  const products = data?.pages.flatMap((page) => page.items);
+
   if (isLoading || !products) return <div>Loading...</div>;
+
+  function loadMoreProducts() {
+    if (!hasNextPage) return;
+    void fetchNextPage();
+  }
 
   return (
     <Grid>
@@ -27,6 +51,9 @@ const Products: NextPage = () => {
           <p>{product.description}</p>
         </Card>
       ))}
+      <div className="col-span-full">
+        <ScrollLoader isVisible={isFetching} onIntersect={loadMoreProducts} />
+      </div>
     </Grid>
   );
 };

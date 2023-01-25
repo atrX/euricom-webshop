@@ -9,6 +9,7 @@ export const productsRouter = createTRPCRouter({
     .input(
       z
         .object({
+          cursor: z.number().nullish().optional(),
           order: z.enum(["asc", "desc"]).optional(),
           orderBy: z.string().optional(),
           page: z.number().optional(),
@@ -17,7 +18,8 @@ export const productsRouter = createTRPCRouter({
         .optional()
     )
     .query(async ({ ctx, input = {} }) => {
-      const { order = "asc", orderBy, page = 1, rowsPerPage = 20 } = input;
+      const { order = "asc", orderBy, rowsPerPage = 20 } = input;
+      const page = input.cursor ?? input.page ?? 1;
 
       const query = {
         orderBy: {},
@@ -41,6 +43,9 @@ export const productsRouter = createTRPCRouter({
         }),
       ]);
 
+      const totalPages = Math.ceil(totalRows / rowsPerPage);
+      const nextCursor = page < totalPages ? page + 1 : undefined;
+
       return {
         items: products,
         pagination: {
@@ -48,9 +53,10 @@ export const productsRouter = createTRPCRouter({
           orderBy,
           page,
           rowsPerPage,
-          totalPages: Math.ceil(totalRows / rowsPerPage),
+          totalPages,
           totalRows,
         },
+        nextCursor,
       } as PagedResult<Product>;
     }),
 
