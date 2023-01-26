@@ -1,15 +1,24 @@
 import classNames from "classnames";
-import type { PropsWithChildren, ReactElement, ReactNode } from "react";
+import {
+  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 export type TableProps<T> = {
   children?: ReactNode;
   columns: Array<{
     title: string;
     key: keyof T;
+    sortable?: boolean;
     sticky?: boolean;
   }>;
   items: Array<T>;
+  onSort?: (key: keyof T, order: "asc" | "desc") => void;
   primaryKey: keyof T;
+  sortBy?: keyof T | null;
+  sortOrder?: "asc" | "desc";
   zebra?: boolean;
 };
 
@@ -17,9 +26,20 @@ const Table = <T extends object>({
   children,
   columns,
   items,
+  onSort,
   primaryKey,
+  sortBy = null,
+  sortOrder = "asc",
   zebra,
 }: PropsWithChildren<TableProps<T>>): ReactElement | null => {
+  function handleSort(key: keyof T) {
+    const column = columns.find((column) => column.key === key);
+    if (!column?.sortable) return;
+
+    const order = sortBy === key && sortOrder === "asc" ? "desc" : "asc";
+    onSort?.(key, order);
+  }
+
   const TableBody = () => (
     <>
       {items.map((item) => (
@@ -39,12 +59,24 @@ const Table = <T extends object>({
       <table className={classNames("table", "w-full", zebra && "table-zebra")}>
         <thead>
           <tr>
-            {columns.map(({ title, sticky }) => (
+            {columns.map(({ key, title, sortable, sticky }) => (
               <th
                 key={title}
-                className={classNames(sticky && "sticky right-0")}
+                className={classNames(
+                  sticky && "sticky right-0",
+                  sortable && "cursor-pointer"
+                )}
+                onClick={() => handleSort(key)}
               >
-                {title}
+                <div className="flex flex-row items-center gap-1">
+                  {title}
+                  {sortBy === key && sortOrder === "desc" && (
+                    <MdArrowDropDown size={16} />
+                  )}
+                  {sortBy === key && sortOrder === "asc" && (
+                    <MdArrowDropUp size={16} />
+                  )}
+                </div>
               </th>
             ))}
           </tr>

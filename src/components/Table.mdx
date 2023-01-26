@@ -1,4 +1,4 @@
-import { Story, Canvas, ArgsTable } from '@storybook/blocks';
+import { Story, Canvas, ArgsTable } from "@storybook/blocks";
 
 # Table
 
@@ -17,11 +17,11 @@ type Item = {
 type Column<T> = {
   title: string;
   key: keyof T;
+  sortable?: boolean;
+  sticky?: boolean;
 };
 ```
 
 <Canvas>
   <Story id="components-table--simple" />
 </Canvas>
-
-

@@ -2,6 +2,8 @@ import type { Meta } from "@storybook/react";
 import { faker } from "@faker-js/faker";
 import Table from "./Table";
 import page from "./Table.mdx";
+import { useState } from "react";
+import orderBy from "lodash/orderBy";
 
 export default {
   component: Table,
@@ -20,6 +22,7 @@ type Item = {
 type Column<T> = {
   title: string;
   key: keyof T;
+  sortable?: boolean;
 };
 
 function buildPeople(): Item[] {
@@ -82,5 +85,41 @@ export const CustomBody = () => {
         </tr>
       ))}
     </Table>
+  );
+};
+
+export const Sortable = () => {
+  const columns = [
+    {
+      key: "id",
+      title: "ID",
+      sortable: true,
+    },
+    {
+      key: "name",
+      title: "Name",
+      sortable: true,
+    },
+  ] as Column<Item>[];
+  const items = buildPeople();
+
+  const [sortState, setSortState] = useState<{
+    sortBy: keyof Item;
+    sortOrder: "asc" | "desc";
+  }>({
+    sortBy: "id",
+    sortOrder: "asc",
+  });
+  const sortedItems = orderBy(items, [sortState.sortBy], [sortState.sortOrder]);
+
+  return (
+    <Table
+      columns={columns}
+      items={sortedItems}
+      primaryKey="id"
+      sortBy={sortState.sortBy}
+      sortOrder={sortState.sortOrder}
+      onSort={(sortBy, sortOrder) => setSortState({ sortBy, sortOrder })}
+    />
   );
 };

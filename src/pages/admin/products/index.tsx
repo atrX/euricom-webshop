@@ -1,3 +1,4 @@
+import type { Product } from "@prisma/client";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { MdDelete, MdEdit } from "react-icons/md";
@@ -45,6 +46,15 @@ export const AdminProductsPage: NextPage = () => {
     void router.push(`/admin/products/${id}`);
   }
 
+  function sortTable(key: keyof Product, order: "asc" | "desc") {
+    setPagination((previousPagination) => ({
+      ...previousPagination,
+      page: 1,
+      orderBy: key,
+      order,
+    }));
+  }
+
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="flex w-full flex-row justify-end">
@@ -53,15 +63,18 @@ export const AdminProductsPage: NextPage = () => {
       <Table
         items={products}
         columns={[
-          { key: "name", title: "Name" },
+          { key: "name", title: "Name", sortable: true },
           { key: "image", title: "Image" },
-          { key: "price", title: "Price" },
-          { key: "stock", title: "Stock" },
+          { key: "price", title: "Price", sortable: true },
+          { key: "stock", title: "Stock", sortable: true },
           { key: "description", title: "Description" },
           { key: "id", title: "Actions", sticky: true },
         ]}
         primaryKey="id"
+        sortBy={pagination.orderBy as keyof Product}
+        sortOrder={pagination.order}
         zebra
+        onSort={sortTable}
       >
         {products.map((product) => (
           <tr key={product.id}>
