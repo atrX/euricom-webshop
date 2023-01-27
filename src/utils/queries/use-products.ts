@@ -8,12 +8,13 @@ export function useProducts() {
 
   const trpcUtils = api.useContext();
   const queryProps = api.products.getPaged.useQuery(pagination);
-  const { mutate: remove } = api.products.remove.useMutation({
-    onSuccess(data) {
-      void trpcUtils.products.get.invalidate(data.id);
-      void trpcUtils.products.getPaged.invalidate();
-    },
-  });
+  const { mutate: remove, mutateAsync: removeAsync } =
+    api.products.remove.useMutation({
+      onSuccess(data) {
+        void trpcUtils.products.get.invalidate(data.id);
+        void trpcUtils.products.getPaged.invalidate();
+      },
+    });
 
   const { items, pagination: paginationResult } = queryProps.data ?? {};
 
@@ -29,5 +30,6 @@ export function useProducts() {
     ...paginationProps,
     data: items,
     remove,
+    removeAsync,
   };
 }
