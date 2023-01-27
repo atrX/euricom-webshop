@@ -60,7 +60,7 @@ const ToastConsumer: React.FC = () => {
   }, []);
 
   return (
-    <div className="toast-end toast toast-top items-end">
+    <div className="toast-end toast toast-top z-50 items-end">
       {toasts.map((toast, index) => {
         const onDismiss =
           toast.dismissible !== false ? () => dismissToast(index) : undefined;

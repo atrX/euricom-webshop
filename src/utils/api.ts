@@ -11,6 +11,7 @@ import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
 
 import { type AppRouter } from "../server/api/root";
+import { eventBus } from "./event-bus";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
@@ -44,6 +45,21 @@ export const api = createTRPCNext<AppRouter>({
           url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
+
+      queryClientConfig: {
+        defaultOptions: {
+          mutations: {
+            onError(error) {
+              eventBus.emit("mutation-error", error);
+            },
+          },
+          queries: {
+            onError(error) {
+              eventBus.emit("query-error", error);
+            },
+          },
+        },
+      },
     };
   },
   /**

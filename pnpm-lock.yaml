@@ -45,6 +45,7 @@ specifiers:
   jsdom: ^21.0.0
   lodash: ^4.17.21
   mime-types: ^2.1.35
+  mitt: ^3.0.0
   multer: 1.4.5-lts.1
   next: 13.1.1
   next-auth: ^4.18.7
@@ -56,7 +57,6 @@ specifiers:
   prisma: ^4.8.0
   react: 18.2.0
   react-dom: 18.2.0
-  react-error-boundary: ^3.1.4
   react-hook-form: ^7.41.5
   react-icons: ^4.7.1
   storybook: ^7.0.0-beta.25
@@ -80,13 +80,13 @@ dependencies:
   classnames: 2.3.2
   lodash: 4.17.21
   mime-types: 2.1.35
+  mitt: 3.0.0
   multer: 1.4.5-lts.1
   next: 13.1.1_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.18.8_q76c2b4vyoegvsbrcwkfvimnai
   next-connect: 0.13.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  react-error-boundary: 3.1.4_react@18.2.0
   react-hook-form: 7.41.5_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
   superjson: 1.9.1
@@ -8265,6 +8265,10 @@ packages:
       yallist: 4.0.0
     dev: true
 
+  /mitt/3.0.0:
+    resolution: {integrity: sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==}
+    dev: false
+
   /mixin-deep/1.3.2:
     resolution: {integrity: sha512-WRoDn//mXBiJ1H40rqa3vH0toePwSsGb45iInWlTySa+Uu4k3tYUSxa2v1KqAiLtvlrSzaExqS1gtk96A9zvEA==}
     engines: {node: '>=0.10.0'}
@@ -9373,16 +9377,6 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.1.0
     dev: true
-
-  /react-error-boundary/3.1.4_react@18.2.0:
-    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
-    engines: {node: '>=10', npm: '>=6'}
-    peerDependencies:
-      react: '>=16.13.1'
-    dependencies:
-      '@babel/runtime': 7.20.7
-      react: 18.2.0
-    dev: false
 
   /react-hook-form/7.41.5_react@18.2.0:
     resolution: {integrity: sha512-DAKjSJ7X9f16oQrP3TW2/eD9N6HOgrmIahP4LOdFphEWVfGZ2LulFd6f6AQ/YS/0cx/5oc4j8a1PXxuaurWp/Q==}
