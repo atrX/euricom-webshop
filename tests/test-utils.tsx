@@ -6,6 +6,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import DialogProvider from "../src/components/DialogProvider";
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -24,7 +25,9 @@ const createWrapper = () => {
 
   // eslint-disable-next-line react/display-name
   return ({ children }: { children: ReactNode }) => (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <DialogProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </DialogProvider>
   );
 };
 
