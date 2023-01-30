@@ -9,6 +9,7 @@ function buildProduct() {
     description: faker.commerce.productDescription(),
     price: Number(faker.commerce.price()),
     image: faker.image.image(),
+    stock: Math.round(Math.random() * 10),
   };
 }
 

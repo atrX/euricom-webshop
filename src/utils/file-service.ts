@@ -1,8 +1,10 @@
+import { env } from "../env/client.mjs";
+
 export async function uploadFile(file: File) {
   const body = new FormData();
   body.append("file", file);
 
-  const response = await fetch("/api/file", {
+  const response = await fetch(`${env.NEXT_PUBLIC_API_URL}/file`, {
     method: "POST",
     body,
   });

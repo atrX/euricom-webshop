@@ -8,7 +8,13 @@ const InputError: React.FC<InputErrorProps> = ({ value }) => {
   const message = typeof value === "string" ? value : value?.message;
   return (
     <div className="label">
-      <span className="label-text-alt text-error">{message}</span>
+      <span
+        className="label-text-alt text-error"
+        role="alert"
+        aria-label={message}
+      >
+        {message}
+      </span>
     </div>
   );
 };

@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
+    "@next/env": "^13.1.6",
     "@storybook/addon-actions": "7.0.0-beta.25",
     "@storybook/addon-docs": "^7.0.0-beta.25",
     "@storybook/addon-essentials": "^7.0.0-beta.25",
@@ -80,6 +81,7 @@
     "eslint-config-next": "13.1.1",
     "eslint-plugin-storybook": "^0.6.10",
     "jsdom": "^21.0.0",
+    "msw": "^1.0.0",
     "postcss": "^8.4.14",
     "postcss-loader": "^7.0.2",
     "prettier": "^2.8.1",
