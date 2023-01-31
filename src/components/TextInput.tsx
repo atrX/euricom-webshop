@@ -13,10 +13,7 @@ export type TextInputProps = {
   value: string;
 };
 
-const TextInput: React.FC<TextInputProps> = forwardRef<
-  HTMLInputElement,
-  TextInputProps
->((props, ref) => {
+const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   const {
     disabled,
     error,

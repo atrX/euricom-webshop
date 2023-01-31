@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { render } from "../../tests/test-utils";
 import { useToast } from "../utils/use-toast";
-import { ToastMessageObject } from "../types/toast";
+import type { ToastMessageObject } from "../types/toast";
 
 describe("ToastProvider component", () => {
   let hook: ReturnType<typeof useToast>;

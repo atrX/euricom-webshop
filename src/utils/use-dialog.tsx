@@ -1,4 +1,9 @@
-import { Children, cloneElement, isValidElement } from "react";
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  type ReactElement,
+} from "react";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import {
   useDialogContext,
@@ -20,10 +25,7 @@ export function useDialog() {
 
       const childrenWithProps = Children.map(component, (child) => {
         if (isValidElement(child)) {
-          // TODO: look into fixing type error
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return cloneElement(child, { close });
+          return cloneElement(child as ReactElement, { close });
         }
         return child;
       });

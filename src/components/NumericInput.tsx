@@ -15,33 +15,34 @@ function numberToString(value?: number | null) {
   return value ? `${value}` : "";
 }
 
-const NumericInput: React.FC<NumericInputProps> = forwardRef(
-  ({ value, onChange, ...props }, ref) => {
-    const [internalValue, setInternalValue] = useState(numberToString(value));
+const NumericInput: React.FC<NumericInputProps> = forwardRef<
+  HTMLInputElement,
+  NumericInputProps
+>(({ value, onChange, ...props }, ref) => {
+  const [internalValue, setInternalValue] = useState(numberToString(value));
 
-    useEffect(() => {
-      if (value !== Number(internalValue)) {
-        setInternalValue(numberToString(value));
-      }
-    }, [internalValue, value]);
-
-    function handleChange(stringValue: string) {
-      const numericValue = stringValue ? Number(stringValue) : null;
-      if (numericValue !== null && isNaN(numericValue)) return;
-      setInternalValue(stringValue);
-      onChange(numericValue);
+  useEffect(() => {
+    if (value !== Number(internalValue)) {
+      setInternalValue(numberToString(value));
     }
+  }, [internalValue, value]);
 
-    return (
-      <TextInput
-        ref={ref}
-        {...props}
-        value={internalValue}
-        onChange={handleChange}
-      />
-    );
+  function handleChange(stringValue: string) {
+    const numericValue = stringValue ? Number(stringValue) : null;
+    if (numericValue !== null && isNaN(numericValue)) return;
+    setInternalValue(stringValue);
+    onChange(numericValue);
   }
-);
+
+  return (
+    <TextInput
+      ref={ref}
+      {...props}
+      value={internalValue}
+      onChange={handleChange}
+    />
+  );
+});
 NumericInput.displayName = "NumericInput";
 
 export default NumericInput;
