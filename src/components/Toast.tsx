@@ -24,6 +24,8 @@ const Toast: React.FC<ToastProps> = ({
         "alert-success": type === "success",
         "alert-warning": type === "warning",
       })}
+      role="alert"
+      aria-label={message}
     >
       <div>
         <span>{message}</span>

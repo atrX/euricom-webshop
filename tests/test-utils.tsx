@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import DialogProvider from "../src/components/DialogProvider";
+import ToastProvider from "../src/components/ToastProvider";
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -25,9 +26,13 @@ const createWrapper = () => {
 
   // eslint-disable-next-line react/display-name
   return ({ children }: { children: ReactNode }) => (
-    <DialogProvider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </DialogProvider>
+    <ToastProvider>
+      <DialogProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </DialogProvider>
+    </ToastProvider>
   );
 };
 
