@@ -39,6 +39,7 @@ specifiers:
   '@vitejs/plugin-react': ^3.0.1
   autoprefixer: ^10.4.7
   classnames: ^2.3.2
+  cross-fetch: ^3.1.5
   css-loader: ^6.7.3
   daisyui: ^2.46.1
   eslint: ^8.30.0
@@ -126,6 +127,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.48.1_iukboom6ndih5an6iafl45j2fe
   '@vitejs/plugin-react': 3.0.1
   autoprefixer: 10.4.13_postcss@8.4.21
+  cross-fetch: 3.1.5
   css-loader: 6.7.3
   daisyui: 2.46.1_gbtt6ss3tbiz4yjtvdr6fbrj44
   eslint: 8.31.0
@@ -5391,6 +5393,14 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
       yaml: 1.10.2
+    dev: true
+
+  /cross-fetch/3.1.5:
+    resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==}
+    dependencies:
+      node-fetch: 2.6.7
+    transitivePeerDependencies:
+      - encoding
     dev: true
 
   /cross-spawn/7.0.3:

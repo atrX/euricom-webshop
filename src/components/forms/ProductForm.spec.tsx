@@ -1,12 +1,13 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, type Mock, vi } from "vitest";
 import { rest } from "msw";
 import { render } from "../../../tests/test-utils";
 import { server } from "../../../tests/msw";
 import ProductForm from "./ProductForm";
+import { api } from "../../utils/api";
 
-// TODO: make this work in test somehow
+// TODO: make this work without mocking somehow
 vi.mock("../../utils/api.ts", () => ({
   api: {
     useContext: () => null,
@@ -30,8 +31,16 @@ describe("ProductForm component", () => {
     render(<ProductForm />);
   });
 
-  // TODO: investigate why fetch call fails for file service
-  it.skip("should submit the form", async () => {
+  it("should submit the form", async () => {
+    const result = {
+      id: "cldlqyd9k0020sn35skofm5h5",
+      name: "Test product",
+      description: "This is a test",
+      price: 4.2,
+      image: "http://localhost/uploads/test.png",
+      stock: 32,
+    };
+
     server.use(
       rest.post("http://localhost/api/file", (req, res, ctx) => {
         return res(
@@ -42,21 +51,10 @@ describe("ProductForm component", () => {
           })
         );
       })
-      // rest.post("http://localhost/api/trpc/products.add", (req, res, ctx) => {
-      //   return res(
-      //     ctx.json([
-      //       {
-      //         result: {
-      //           data: {
-      //             json: {
-      //               id: "foo",
-      //             },
-      //           },
-      //         },
-      //       },
-      //     ])
-      //   );
-      // })
+    );
+
+    (api.products.add.useMutation().mutateAsync as Mock).mockResolvedValue(
+      result
     );
 
     const fakeFile = new File(["test"], "test.png", { type: "image/png" });
@@ -79,7 +77,7 @@ describe("ProductForm component", () => {
     const submitButton = screen.getByRole("button", { name: /add product/i });
     await userEvent.click(submitButton);
 
-    expect(onSubmit).toHaveBeenCalledWith({});
+    expect(onSubmit).toHaveBeenCalledWith(result);
   });
 
   it("should show validation errors for required fields", async () => {
