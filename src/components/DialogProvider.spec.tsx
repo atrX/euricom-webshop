@@ -1,7 +1,6 @@
-import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { render } from "../../tests/test-utils";
+import { render, screen } from "../../tests/test-utils";
 import { useDialog } from "../utils/use-dialog";
 import Button from "./Button";
 

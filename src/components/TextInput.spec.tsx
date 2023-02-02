@@ -1,8 +1,7 @@
-import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { describe, expect, it } from "vitest";
-import { render } from "../../tests/test-utils";
+import { render, screen } from "../../tests/test-utils";
 import TextInput, { type TextInputProps } from "./TextInput";
 
 const TestComponent: React.FC<Omit<TextInputProps, "value" | "onChange">> = (

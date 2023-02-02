@@ -1,6 +1,5 @@
-import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { render } from "../../tests/test-utils";
+import { render, screen } from "../../tests/test-utils";
 import { useToast } from "../utils/use-toast";
 import type { ToastMessageObject } from "../types/toast";
 

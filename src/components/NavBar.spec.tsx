@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../tests/test-utils";
 import { useSession, type SessionContextValue } from "next-auth/react";
 import { useRouter, type NextRouter } from "next/router";
 import {

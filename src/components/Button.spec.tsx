@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../tests/test-utils";
 import userEvent from "@testing-library/user-event";
 import type { ButtonProps } from "./Button";
 import Button from "./Button";

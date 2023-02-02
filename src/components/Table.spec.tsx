@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../tests/test-utils";
 import { beforeEach, describe, it } from "vitest";
 import Table from "./Table";
 
