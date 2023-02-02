@@ -6,14 +6,30 @@ import { productSchema } from "../../../schemas/product.schema";
 
 export const productsRouter = createTRPCRouter({
   getPaged: publicProcedure
+    .meta({ description: "Get paged products." })
     .input(
       z
         .object({
-          cursor: z.number().nullish().optional(),
-          order: z.enum(["asc", "desc"]).optional(),
-          orderBy: z.string().optional(),
-          page: z.number().optional(),
-          rowsPerPage: z.number().optional(),
+          cursor: z
+            .number()
+            .nullish()
+            .optional()
+            .describe(
+              'Page number. Equivalent to "page" parameter, but used for infinite queries.'
+            ),
+          order: z
+            .enum(["asc", "desc"])
+            .optional()
+            .describe("Order to sort results in (asc, desc)."),
+          orderBy: z
+            .string()
+            .optional()
+            .describe("Property to sort results on."),
+          page: z.number().optional().describe("Page number."),
+          rowsPerPage: z
+            .number()
+            .optional()
+            .describe("Amount of records to fetch per page."),
         })
         .optional()
     )
@@ -60,16 +76,20 @@ export const productsRouter = createTRPCRouter({
       } as PagedResult<Product>;
     }),
 
-  get: publicProcedure.input(z.string()).query(async ({ ctx, input: id }) => {
-    return ctx.prisma.product.findFirst({
-      where: {
-        id,
-      },
-    });
-  }),
+  get: publicProcedure
+    .meta({ description: "Get single product." })
+    .input(z.string().describe("Unique product identifier."))
+    .query(async ({ ctx, input: id }) => {
+      return ctx.prisma.product.findFirst({
+        where: {
+          id,
+        },
+      });
+    }),
 
   remove: adminProcedure
-    .input(z.string())
+    .meta({ description: "Remove a single product." })
+    .input(z.string().describe("Unique product identifier."))
     .mutation(async ({ ctx, input: id }) => {
       return ctx.prisma.product.delete({
         where: {
@@ -78,19 +98,25 @@ export const productsRouter = createTRPCRouter({
       });
     }),
 
-  add: adminProcedure.input(productSchema).mutation(async ({ ctx, input }) => {
-    return ctx.prisma.product.create({
-      data: input,
-    });
-  }),
+  add: adminProcedure
+    .meta({ description: "Add a product." })
+    .input(productSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.product.create({
+        data: input,
+      });
+    }),
 
-  edit: adminProcedure.input(productSchema).mutation(async ({ ctx, input }) => {
-    const { id, ...data } = input;
-    return ctx.prisma.product.update({
-      where: {
-        id,
-      },
-      data,
-    });
-  }),
+  edit: adminProcedure
+    .meta({ description: "Edit a product." })
+    .input(productSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { id, ...data } = input;
+      return ctx.prisma.product.update({
+        where: {
+          id,
+        },
+        data,
+      });
+    }),
 });

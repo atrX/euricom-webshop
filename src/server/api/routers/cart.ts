@@ -2,31 +2,34 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const cartRouter = createTRPCRouter({
-  getCart: protectedProcedure.query(async ({ ctx }) => {
-    // create if doesn't exist
-    return ctx.prisma.cart.upsert({
-      where: {
-        userId: ctx.session.user.id,
-      },
-      create: {
-        userId: ctx.session.user.id,
-      },
-      update: {},
-      include: {
-        cartProducts: {
-          include: {
-            product: true,
+  getCart: protectedProcedure
+    .meta({ description: "Get the signed-in user's cart." })
+    .query(async ({ ctx }) => {
+      // create if doesn't exist
+      return ctx.prisma.cart.upsert({
+        where: {
+          userId: ctx.session.user.id,
+        },
+        create: {
+          userId: ctx.session.user.id,
+        },
+        update: {},
+        include: {
+          cartProducts: {
+            include: {
+              product: true,
+            },
           },
         },
-      },
-    });
-  }),
+      });
+    }),
 
   // TODO: improve this query (possibly reduce to single query?)
   addToCart: protectedProcedure
+    .meta({ description: "Add a product to the signed-in user's cart." })
     .input(
       z.object({
-        productId: z.string(),
+        productId: z.string().describe("Unique product identifier."),
       })
     )
     .mutation(async ({ ctx, input: { productId } }) => {
@@ -59,10 +62,14 @@ export const cartRouter = createTRPCRouter({
     }),
 
   setQuantity: protectedProcedure
+    .meta({
+      description:
+        "Set the quantity for a specified product in the signed-in user's cart.",
+    })
     .input(
       z.object({
-        id: z.string(),
-        amount: z.number(),
+        id: z.string().describe("Unique cart product identifier."),
+        amount: z.number().describe("Quantity of product in cart."),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -77,7 +84,8 @@ export const cartRouter = createTRPCRouter({
     }),
 
   removeFromCart: protectedProcedure
-    .input(z.string())
+    .meta({ description: "Remove a product from the signed-in user's cart." })
+    .input(z.string().describe("Unique cart product identifier."))
     .mutation(async ({ ctx, input: id }) => {
       return ctx.prisma.cartProduct.delete({
         where: {
