@@ -3,6 +3,7 @@ import type { Product } from "@prisma/client";
 import type { PagedResult } from "../../../types/pagination";
 import { createTRPCRouter, publicProcedure, adminProcedure } from "../trpc";
 import { productSchema } from "../../../schemas/product.schema";
+import { TRPCError } from "@trpc/server";
 
 export const productsRouter = createTRPCRouter({
   getPaged: publicProcedure
@@ -80,11 +81,15 @@ export const productsRouter = createTRPCRouter({
     .meta({ description: "Get single product." })
     .input(z.string().describe("Unique product identifier."))
     .query(async ({ ctx, input: id }) => {
-      return ctx.prisma.product.findFirst({
+      const product = await ctx.prisma.product.findFirst({
         where: {
           id,
         },
       });
+
+      if (!product) throw new TRPCError({ code: "NOT_FOUND" });
+
+      return product;
     }),
 
   remove: adminProcedure
